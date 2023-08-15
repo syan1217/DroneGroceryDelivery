@@ -1,0 +1,396 @@
+> // create multiple stores
+> make_store,kroger,33000,3,6,90100,3j8fr7gu89j,admin,800-888-8888
+OK:change_completed
+> make_store,kroger,37000,10,20,90101,89rw9h59ng,admin,800-888-8889
+ERROR:store_identifier_already_exists
+> make_store,publix,33000,10,20,90102,84g48u8g09,admin,800-888-8890
+OK:change_completed
+> display_stores
+name:kroger,revenue:33000,addressLat:3.0,addressLng:6.0
+name:publix,revenue:33000,addressLat:10.0,addressLng:20.0
+OK:display_completed
+> // create multiple items to be sold by stores
+> switch_role,90100,3j8fr7gu89j,admin,kroger
+OK:login_completed
+> sell_item,kroger,pot_roast,5
+OK:change_completed
+> sell_item,kroger,cheesecake,4
+OK:change_completed
+> sell_item,kroger,cheesecake,3
+ERROR:item_identifier_already_exists
+> display_items,kroger
+cheesecake,4
+pot_roast,5
+OK:display_completed
+> switch_role,90102,84g48u8g09,admin,publix
+OK:login_completed
+> sell_item,publix,cheesecake,8
+OK:change_completed
+> display_items,publix
+cheesecake,8
+OK:display_completed
+> sell_item,whole_foods,antipasto,10
+Error:you_do_not_have_permission_to_execute_this_command_please_switch_user
+> display_items,whole_foods
+Error:you_do_not_have_permission_to_execute_this_command_please_switch_user
+> // create multiple pilots to control the drones
+> make_pilot,ffig8,Finneas,Fig,888-888-8888,890-12-3456,panam_10,33,90301,0fu4wj8g8q0,pilot
+OK:change_completed
+> make_pilot,ggrape17,Gillian,Grape,999-999-9999,234-56-7890,twa_21,31,90302,fq84j9tu0u0,pilot
+OK:change_completed
+> make_pilot,ffig8,Frances,Faro,777-777-7777,678-90-1234,eastern_6,36,90303,40utj08qjg,pilot
+ERROR:pilot_identifier_already_exists
+> make_pilot,kkiwi23,Kiara,Kiwi,555-555-5555,890-12-3456,panam_10,28,90304,f4q308j080,pilot
+ERROR:pilot_license_already_exists
+> display_pilots
+name:Finneas_Fig,phone:888-888-8888,taxID:890-12-3456,licenseID:panam_10,experience:33
+name:Gillian_Grape,phone:999-999-9999,taxID:234-56-7890,licenseID:twa_21,experience:31
+OK:display_completed
+> // create multiple drones to deliver the orders
+> switch_role,90100,3j8fr7gu89j,admin,kroger
+OK:login_completed
+> make_drone,kroger,1,40
+OK:change_completed
+> make_drone,kroger,1,100
+ERROR:drone_identifier_already_exists
+> make_drone,kroger,2,20
+OK:change_completed
+> display_drones,kroger
+droneID:1,total_cap:40,num_orders:0,remaining_cap:40,current_battery:50
+droneID:2,total_cap:20,num_orders:0,remaining_cap:20,current_battery:50
+OK:display_completed
+> switch_role,90102,84g48u8g09,admin,publix
+OK:login_completed
+> make_drone,publix,1,40
+OK:change_completed
+> display_drones,publix
+droneID:1,total_cap:40,num_orders:0,remaining_cap:40,current_battery:50
+OK:display_completed
+> make_drone,whole_foods,1,40
+Error:you_do_not_have_permission_to_execute_this_command_please_switch_user
+> display_drones,whole_foods
+Error:you_do_not_have_permission_to_execute_this_command_please_switch_user
+> // assign pilots to drones
+> switch_role,90100,3j8fr7gu89j,admin,kroger
+OK:login_completed
+> fly_drone,kroger,1,ffig8
+OK:change_completed
+> display_drones,kroger
+droneID:1,total_cap:40,num_orders:0,remaining_cap:40,current_battery:50,flown_by:Finneas_Fig
+droneID:2,total_cap:20,num_orders:0,remaining_cap:20,current_battery:50
+OK:display_completed
+> switch_role,90102,84g48u8g09,admin,publix
+OK:login_completed
+> fly_drone,publix,2,ggrape17
+ERROR:drone_identifier_does_not_exist
+> fly_drone,publix,1,hhoneydew20
+ERROR:pilot_identifier_does_not_exist
+> fly_drone,publix,1,ggrape17
+OK:change_completed
+> display_drones,publix
+droneID:1,total_cap:40,num_orders:0,remaining_cap:40,current_battery:50,flown_by:Gillian_Grape
+OK:display_completed
+> fly_drone,whole_foods,1,ggrape17
+Error:you_do_not_have_permission_to_execute_this_command_please_switch_user
+> display_drones,whole_foods
+Error:you_do_not_have_permission_to_execute_this_command_please_switch_user
+> // create multiple customers to purchase items
+> make_customer,aapple2,Alana,Apple,222-222-2222,4,100,90500,03j408q3tj,customer
+OK:change_completed
+> make_customer,aapple2,Ariana,Asparagus,333-333-3333,5,150,90501,f029j0g0gj8,customer
+ERROR:customer_identifier_already_exists
+> make_customer,ccherry4,Carlos,Cherry,444-444-4444,5,300,90502,3g08gq4qg5,customer
+OK:change_completed
+> display_customers
+name:Alana_Apple,phone:222-222-2222,rating:4,credit:100
+name:Carlos_Cherry,phone:444-444-4444,rating:5,credit:300
+OK:display_completed
+> // create multiple orders as requested by customers
+> switch_role,90100,3j8fr7gu89j,admin,kroger
+OK:login_completed
+> start_order,kroger,purchaseA,1,aapple2,5,6
+OK:change_completed
+> start_order,kroger,purchaseB,1,aapple2,10,12
+OK:change_completed
+> start_order,kroger,purchaseA,1,aapple2,12,20
+ERROR:order_identifier_already_exists
+> start_order,kroger,purchaseC,3,aapple2,20,30
+ERROR:drone_identifier_does_not_exist
+> start_order,kroger,purchaseC,1,bbanana3,50,50
+ERROR:customer_identifier_does_not_exist
+> start_order,kroger,purchaseD,2,ccherry4,50,50
+OK:change_completed
+> display_orders,kroger
+orderID:purchaseA
+orderID:purchaseB
+orderID:purchaseD
+OK:display_completed
+> switch_role,90102,84g48u8g09,admin,publix
+OK:login_completed
+> start_order,publix,purchaseA,1,ccherry4,20,25
+OK:change_completed
+> display_orders,publix
+orderID:purchaseA
+OK:display_completed
+> start_order,whole_foods,purchaseC,1,aapple2,35,12
+Error:you_do_not_have_permission_to_execute_this_command_please_switch_user
+> display_orders,whole_foods
+Error:you_do_not_have_permission_to_execute_this_command_please_switch_user
+> // add multiple items to the orders
+> switch_role,90100,3j8fr7gu89j,admin,kroger
+OK:login_completed
+> request_item,kroger,purchaseA,pot_roast,3,10
+OK:change_completed
+> request_item,kroger,purchaseB,pot_roast,4,5
+OK:change_completed
+> request_item,kroger,purchaseE,cheesecake,1,10
+ERROR:order_identifier_does_not_exist
+> request_item,kroger,purchaseA,truffle_risotto,1,10
+ERROR:item_identifier_does_not_exist
+> request_item,kroger,purchaseA,pot_roast,1,10
+ERROR:item_already_ordered
+> request_item,kroger,purchaseA,cheesecake,1,90
+ERROR:customer_cant_afford_new_item
+> request_item,kroger,purchaseA,cheesecake,10,5
+ERROR:drone_cant_carry_new_item
+> request_item,kroger,purchaseD,cheesecake,1,10
+OK:change_completed
+> display_orders,kroger
+orderID:purchaseA
+item_name:pot_roast,total_quantity:3,total_cost:30,total_weight:15
+orderID:purchaseB
+item_name:pot_roast,total_quantity:4,total_cost:20,total_weight:20
+orderID:purchaseD
+item_name:cheesecake,total_quantity:1,total_cost:10,total_weight:4
+OK:display_completed
+> switch_role,90102,84g48u8g09,admin,publix
+OK:login_completed
+> request_item,publix,purchaseA,cheesecake,3,10
+OK:change_completed
+> display_orders,publix
+orderID:purchaseA
+item_name:cheesecake,total_quantity:3,total_cost:30,total_weight:24
+OK:display_completed
+> request_item,whole_foods,purchaseA,cheesecake,1,10
+Error:you_do_not_have_permission_to_execute_this_command_please_switch_user
+> // display the state of the simulation
+> display_customers
+name:Alana_Apple,phone:222-222-2222,rating:4,credit:100
+name:Carlos_Cherry,phone:444-444-4444,rating:5,credit:300
+OK:display_completed
+> display_stores
+name:kroger,revenue:33000,addressLat:3.0,addressLng:6.0
+name:publix,revenue:33000,addressLat:10.0,addressLng:20.0
+OK:display_completed
+> display_pilots
+name:Finneas_Fig,phone:888-888-8888,taxID:890-12-3456,licenseID:panam_10,experience:33
+name:Gillian_Grape,phone:999-999-9999,taxID:234-56-7890,licenseID:twa_21,experience:31
+OK:display_completed
+> switch_role,90100,3j8fr7gu89j,admin,kroger
+OK:login_completed
+> display_orders,kroger
+orderID:purchaseA
+item_name:pot_roast,total_quantity:3,total_cost:30,total_weight:15
+orderID:purchaseB
+item_name:pot_roast,total_quantity:4,total_cost:20,total_weight:20
+orderID:purchaseD
+item_name:cheesecake,total_quantity:1,total_cost:10,total_weight:4
+OK:display_completed
+> display_drones,kroger
+droneID:1,total_cap:40,num_orders:2,remaining_cap:5,current_battery:50,flown_by:Finneas_Fig
+droneID:2,total_cap:20,num_orders:1,remaining_cap:16,current_battery:50
+OK:display_completed
+> switch_role,90102,84g48u8g09,admin,publix
+OK:login_completed
+> display_orders,publix
+orderID:purchaseA
+item_name:cheesecake,total_quantity:3,total_cost:30,total_weight:24
+OK:display_completed
+> display_drones,publix
+droneID:1,total_cap:40,num_orders:1,remaining_cap:16,current_battery:50,flown_by:Gillian_Grape
+OK:display_completed
+> // deliver an order and display the updated state
+> switch_role,90100,3j8fr7gu89j,admin,kroger
+OK:login_completed
+> purchase_order,kroger,purchaseA,100,4,5,0
+ERROR:drone_needs_charge
+> purchase_order,kroger,purchaseA,100,6,17,0
+OK:change_completed
+> display_orders,kroger
+orderID:purchaseB
+item_name:pot_roast,total_quantity:4,total_cost:20,total_weight:20
+orderID:purchaseD
+item_name:cheesecake,total_quantity:1,total_cost:10,total_weight:4
+OK:display_completed
+> display_drones,kroger
+droneID:1,total_cap:40,num_orders:1,remaining_cap:20,current_battery:100,flown_by:Finneas_Fig
+droneID:2,total_cap:20,num_orders:1,remaining_cap:16,current_battery:50
+OK:display_completed
+> switch_role,90102,84g48u8g09,admin,publix
+OK:login_completed
+> display_orders,publix
+orderID:purchaseA
+item_name:cheesecake,total_quantity:3,total_cost:30,total_weight:24
+OK:display_completed
+> display_drones,publix
+droneID:1,total_cap:40,num_orders:1,remaining_cap:16,current_battery:50,flown_by:Gillian_Grape
+OK:display_completed
+> display_customers
+name:Alana_Apple,phone:222-222-2222,rating:4,credit:70
+name:Carlos_Cherry,phone:444-444-4444,rating:5,credit:300
+OK:display_completed
+> display_stores
+name:kroger,revenue:33030,addressLat:3.0,addressLng:6.0
+name:publix,revenue:33000,addressLat:10.0,addressLng:20.0
+OK:display_completed
+> display_pilots
+name:Finneas_Fig,phone:888-888-8888,taxID:890-12-3456,licenseID:panam_10,experience:34
+name:Gillian_Grape,phone:999-999-9999,taxID:234-56-7890,licenseID:twa_21,experience:31
+OK:display_completed
+> // deliver orders from various stores
+> purchase_order,whole_foods,purchaseA,20,5,6,0
+Error:you_do_not_have_permission_to_execute_this_command_please_switch_user
+> switch_role,90100,3j8fr7gu89j,admin,kroger
+OK:login_completed
+> purchase_order,kroger,purchaseF,100,5,8,1
+ERROR:order_identifier_does_not_exist
+> purchase_order,kroger,purchaseB,70,3,4,0
+ERROR:drone_needs_charge
+> purchase_order,kroger,purchaseD,60,50,30,0
+ERROR:drone_needs_pilot
+> fly_drone,kroger,2,ffig8
+OK:change_completed
+> purchase_order,kroger,purchaseD,60,5,10,0
+ERROR:drone_needs_charge
+> purchase_order,kroger,purchaseD,60,5,20,0
+ERROR:drone_needs_charge
+> purchase_order,kroger,purchaseD,60,20,6,1
+ERROR:drone_needs_charge
+> purchase_order,kroger,purchaseD,60,20,6,2
+OK:change_completed
+> display_orders,kroger
+orderID:purchaseB
+item_name:pot_roast,total_quantity:4,total_cost:20,total_weight:20
+OK:display_completed
+> display_drones,kroger
+droneID:1,total_cap:40,num_orders:1,remaining_cap:20,current_battery:100
+droneID:2,total_cap:20,num_orders:0,remaining_cap:20,current_battery:60,flown_by:Finneas_Fig
+OK:display_completed
+> display_customers
+name:Alana_Apple,phone:222-222-2222,rating:4,credit:70
+name:Carlos_Cherry,phone:444-444-4444,rating:5,credit:290
+OK:display_completed
+> display_stores
+name:kroger,revenue:33040,addressLat:3.0,addressLng:6.0
+name:publix,revenue:33000,addressLat:10.0,addressLng:20.0
+OK:display_completed
+> display_pilots
+name:Finneas_Fig,phone:888-888-8888,taxID:890-12-3456,licenseID:panam_10,experience:35
+name:Gillian_Grape,phone:999-999-9999,taxID:234-56-7890,licenseID:twa_21,experience:31
+OK:display_completed
+> switch_role,90102,84g48u8g09,admin,publix
+OK:login_completed
+> display_orders,publix
+orderID:purchaseA
+item_name:cheesecake,total_quantity:3,total_cost:30,total_weight:24
+OK:display_completed
+> display_drones,publix
+droneID:1,total_cap:40,num_orders:1,remaining_cap:16,current_battery:50,flown_by:Gillian_Grape
+OK:display_completed
+> purchase_order,publix,purchaseA,230,8,15,0
+ERROR:drone_needs_charge
+> purchase_order,publix,purchaseA,230,8,15,1
+OK:change_completed
+> display_orders,publix
+OK:display_completed
+> display_drones,publix
+droneID:1,total_cap:40,num_orders:0,remaining_cap:40,current_battery:230,flown_by:Gillian_Grape
+OK:display_completed
+> display_customers
+name:Alana_Apple,phone:222-222-2222,rating:4,credit:70
+name:Carlos_Cherry,phone:444-444-4444,rating:5,credit:260
+OK:display_completed
+> display_stores
+name:kroger,revenue:33040,addressLat:3.0,addressLng:6.0
+name:publix,revenue:33030,addressLat:10.0,addressLng:20.0
+OK:display_completed
+> display_pilots
+name:Finneas_Fig,phone:888-888-8888,taxID:890-12-3456,licenseID:panam_10,experience:35
+name:Gillian_Grape,phone:999-999-9999,taxID:234-56-7890,licenseID:twa_21,experience:32
+OK:display_completed
+> // transfer order and display efficiency
+> transfer_order,kroger,purchaseB,2
+OK:change_completed
+> display_efficiency
+name:kroger,purchases:2,overloads:1,transfers:1
+name:publix,purchases:1,overloads:0,transfers:0
+OK:display_completed
+> // cancel orders per customer requests
+> cancel_order,whole_foods,purchaseB
+Error:you_do_not_have_permission_to_execute_this_command_please_switch_user
+> switch_role,90100,3j8fr7gu89j,admin,kroger
+OK:login_completed
+> cancel_order,kroger,purchaseG
+ERROR:order_identifier_does_not_exist
+> cancel_order,kroger,purchaseB
+OK:change_completed
+> display_orders,kroger
+OK:display_completed
+> display_drones,kroger
+droneID:1,total_cap:40,num_orders:0,remaining_cap:40,current_battery:100
+droneID:2,total_cap:20,num_orders:0,remaining_cap:20,current_battery:60,flown_by:Finneas_Fig
+OK:display_completed
+> switch_role,90102,84g48u8g09,admin,publix
+OK:login_completed
+> display_orders,publix
+OK:display_completed
+> display_drones,publix
+droneID:1,total_cap:40,num_orders:0,remaining_cap:40,current_battery:230,flown_by:Gillian_Grape
+OK:display_completed
+> display_customers
+name:Alana_Apple,phone:222-222-2222,rating:4,credit:70
+name:Carlos_Cherry,phone:444-444-4444,rating:5,credit:260
+OK:display_completed
+> display_stores
+name:kroger,revenue:33040,addressLat:3.0,addressLng:6.0
+name:publix,revenue:33030,addressLat:10.0,addressLng:20.0
+OK:display_completed
+> display_pilots
+name:Finneas_Fig,phone:888-888-8888,taxID:890-12-3456,licenseID:panam_10,experience:35
+name:Gillian_Grape,phone:999-999-9999,taxID:234-56-7890,licenseID:twa_21,experience:32
+OK:display_completed
+> //Please run this authentication test case after commands_70.txt
+> //check if user exist
+> switch_role,90555,98w985ht,admin,heb
+ERROR:UIN_does_not_exist
+> switch_role,90100,3j8fr7gu89j,admin,kroger
+OK:login_completed
+> //check if role is correct
+> switch_role,90500,03j408q3tj,admin,aapple2
+ERROR: this UIN does not have access to the role admin
+> switch_role,90500,03j408q3tj,pilot,aapple2
+ERROR: this UIN does not have access to the role pilot
+> switch_role,90500,03j408q3tj,customer,aapple2
+OK:login_completed
+> //use authentication to protect user privacy
+> //eg, store kroger cannot run "display_item" for store publix
+> switch_role,90100,3j8fr7gu89j,admin,kroger
+OK:login_completed
+> display_items,kroger
+cheesecake,4
+pot_roast,5
+OK:display_completed
+> display_items,publix
+Error:you_do_not_have_permission_to_execute_this_command_please_switch_user
+> //reset password if failed three times
+> switch_role,90100,123456789,admin,kroger
+ERROR:password is wrong, you have 2 more attempts
+> switch_role,90100,12345678910,admin,kroger
+ERROR:password is wrong, you have 1 more attempts
+> switch_role,90100,123456789101bc,admin,kroger
+ERROR:maximum attempts reached, please reset your password.
+> reset_passwd,90100,NewPWforkroger,800-888-8888
+OK:password_reset_completed
+> //check if new password is correct
+> switch_role,90100,NewPWforkroger,admin,kroger
+OK:login_completed

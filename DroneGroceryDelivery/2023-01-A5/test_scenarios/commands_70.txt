@@ -1,0 +1,162 @@
+// create multiple stores
+make_store,kroger,33000,3,6,90100,3j8fr7gu89j,admin,800-888-8888
+make_store,kroger,37000,10,20,90101,89rw9h59ng,admin,800-888-8889
+make_store,publix,33000,10,20,90102,84g48u8g09,admin,800-888-8890
+display_stores
+// create multiple items to be sold by stores
+switch_role,90100,3j8fr7gu89j,admin,kroger
+sell_item,kroger,pot_roast,5
+sell_item,kroger,cheesecake,4
+sell_item,kroger,cheesecake,3
+display_items,kroger
+switch_role,90102,84g48u8g09,admin,publix
+sell_item,publix,cheesecake,8
+display_items,publix
+sell_item,whole_foods,antipasto,10
+display_items,whole_foods
+// create multiple pilots to control the drones
+make_pilot,ffig8,Finneas,Fig,888-888-8888,890-12-3456,panam_10,33,90301,0fu4wj8g8q0,pilot
+make_pilot,ggrape17,Gillian,Grape,999-999-9999,234-56-7890,twa_21,31,90302,fq84j9tu0u0,pilot
+make_pilot,ffig8,Frances,Faro,777-777-7777,678-90-1234,eastern_6,36,90303,40utj08qjg,pilot
+make_pilot,kkiwi23,Kiara,Kiwi,555-555-5555,890-12-3456,panam_10,28,90304,f4q308j080,pilot
+display_pilots
+// create multiple drones to deliver the orders
+switch_role,90100,3j8fr7gu89j,admin,kroger
+make_drone,kroger,1,40
+make_drone,kroger,1,100
+make_drone,kroger,2,20
+display_drones,kroger
+switch_role,90102,84g48u8g09,admin,publix
+make_drone,publix,1,40
+display_drones,publix
+make_drone,whole_foods,1,40
+display_drones,whole_foods
+// assign pilots to drones
+switch_role,90100,3j8fr7gu89j,admin,kroger
+fly_drone,kroger,1,ffig8
+display_drones,kroger
+switch_role,90102,84g48u8g09,admin,publix
+fly_drone,publix,2,ggrape17
+fly_drone,publix,1,hhoneydew20
+fly_drone,publix,1,ggrape17
+display_drones,publix
+fly_drone,whole_foods,1,ggrape17
+display_drones,whole_foods
+// create multiple customers to purchase items
+make_customer,aapple2,Alana,Apple,222-222-2222,4,100,90500,03j408q3tj,customer
+make_customer,aapple2,Ariana,Asparagus,333-333-3333,5,150,90501,f029j0g0gj8,customer
+make_customer,ccherry4,Carlos,Cherry,444-444-4444,5,300,90502,3g08gq4qg5,customer
+display_customers
+// create multiple orders as requested by customers
+switch_role,90100,3j8fr7gu89j,admin,kroger
+start_order,kroger,purchaseA,1,aapple2,5,6
+start_order,kroger,purchaseB,1,aapple2,10,12
+start_order,kroger,purchaseA,1,aapple2,12,20
+start_order,kroger,purchaseC,3,aapple2,20,30
+start_order,kroger,purchaseC,1,bbanana3,50,50
+start_order,kroger,purchaseD,2,ccherry4,50,50
+display_orders,kroger
+switch_role,90102,84g48u8g09,admin,publix
+start_order,publix,purchaseA,1,ccherry4,20,25
+display_orders,publix
+start_order,whole_foods,purchaseC,1,aapple2,35,12
+display_orders,whole_foods
+// add multiple items to the orders
+switch_role,90100,3j8fr7gu89j,admin,kroger
+request_item,kroger,purchaseA,pot_roast,3,10
+request_item,kroger,purchaseB,pot_roast,4,5
+request_item,kroger,purchaseE,cheesecake,1,10
+request_item,kroger,purchaseA,truffle_risotto,1,10
+request_item,kroger,purchaseA,pot_roast,1,10
+request_item,kroger,purchaseA,cheesecake,1,90
+request_item,kroger,purchaseA,cheesecake,10,5
+request_item,kroger,purchaseD,cheesecake,1,10
+display_orders,kroger
+switch_role,90102,84g48u8g09,admin,publix
+request_item,publix,purchaseA,cheesecake,3,10
+display_orders,publix
+request_item,whole_foods,purchaseA,cheesecake,1,10
+// display the state of the simulation
+display_customers
+display_stores
+display_pilots
+switch_role,90100,3j8fr7gu89j,admin,kroger
+display_orders,kroger
+display_drones,kroger
+switch_role,90102,84g48u8g09,admin,publix
+display_orders,publix
+display_drones,publix
+// deliver an order and display the updated state
+switch_role,90100,3j8fr7gu89j,admin,kroger
+purchase_order,kroger,purchaseA,100,4,5,0
+purchase_order,kroger,purchaseA,100,6,17,0
+display_orders,kroger
+display_drones,kroger
+switch_role,90102,84g48u8g09,admin,publix
+display_orders,publix
+display_drones,publix
+display_customers
+display_stores
+display_pilots
+// deliver orders from various stores
+purchase_order,whole_foods,purchaseA,20,5,6,0
+switch_role,90100,3j8fr7gu89j,admin,kroger
+purchase_order,kroger,purchaseF,100,5,8,1
+purchase_order,kroger,purchaseB,70,3,4,0
+purchase_order,kroger,purchaseD,60,50,30,0
+fly_drone,kroger,2,ffig8
+purchase_order,kroger,purchaseD,60,5,10,0
+purchase_order,kroger,purchaseD,60,5,20,0
+purchase_order,kroger,purchaseD,60,20,6,1
+purchase_order,kroger,purchaseD,60,20,6,2
+display_orders,kroger
+display_drones,kroger
+display_customers
+display_stores
+display_pilots
+switch_role,90102,84g48u8g09,admin,publix
+display_orders,publix
+display_drones,publix
+purchase_order,publix,purchaseA,230,8,15,0
+purchase_order,publix,purchaseA,230,8,15,1
+display_orders,publix
+display_drones,publix
+display_customers
+display_stores
+display_pilots
+// transfer order and display efficiency
+transfer_order,kroger,purchaseB,2
+display_efficiency
+// cancel orders per customer requests
+cancel_order,whole_foods,purchaseB
+switch_role,90100,3j8fr7gu89j,admin,kroger
+cancel_order,kroger,purchaseG
+cancel_order,kroger,purchaseB
+display_orders,kroger
+display_drones,kroger
+switch_role,90102,84g48u8g09,admin,publix
+display_orders,publix
+display_drones,publix
+display_customers
+display_stores
+display_pilots
+//Please run this authentication test case after commands_70.txt
+//check if user exist
+switch_role,90555,98w985ht,admin,heb
+switch_role,90100,3j8fr7gu89j,admin,kroger
+//check if role is correct
+switch_role,90500,03j408q3tj,admin,aapple2
+switch_role,90500,03j408q3tj,pilot,aapple2
+switch_role,90500,03j408q3tj,customer,aapple2
+//use authentication to protect user privacy
+//eg, store kroger cannot run "display_item" for store publix
+switch_role,90100,3j8fr7gu89j,admin,kroger
+display_items,kroger
+display_items,publix
+//reset password if failed three times
+switch_role,90100,123456789,admin,kroger
+switch_role,90100,12345678910,admin,kroger
+switch_role,90100,123456789101bc,admin,kroger
+reset_passwd,90100,NewPWforkroger,800-888-8888
+//check if new password is correct
+switch_role,90100,NewPWforkroger,admin,kroger
