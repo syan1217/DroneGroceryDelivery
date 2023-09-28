@@ -1,4 +1,4 @@
-Group 50: A5 Readme for CS6310 Spring 2023
+# This is for the "Drone Delivery System" project. Please follow the instructions below to begin!
 
 # Add jdk and mysql connector
 
